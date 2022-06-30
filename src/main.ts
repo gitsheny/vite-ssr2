@@ -3,11 +3,16 @@ import { createRouter } from "./router";
 import { createStore, key } from "./store";
 import { RouteRecordNormalized } from "vue-router";
 import App from "./App.vue";
-
+import { ID_INJECTION_KEY } from 'element-plus'
 export function createApp() {
   const app = createSSRApp(App);
   const router = createRouter();
+
   const { store } = createStore();
+  app.provide(ID_INJECTION_KEY, {
+    prefix: Math.floor(Math.random() * 10000),
+    current: 0,
+  })
 
   router.beforeResolve(async (to, from) => {
     let toMatchedComponents = getMatchedComponents(to.matched);

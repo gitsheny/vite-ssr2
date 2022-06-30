@@ -1,8 +1,8 @@
 import { InjectionKey } from "vue";
 import { RouteLocationNormalized } from "vue-router";
-import { createStore as _createStore, Store } from "vuex"; 
+import { createStore as _createStore, Store } from "vuex";
 import { articleArchives } from "@/request";
- 
+
 export interface State {
   client: string[];
   mock: string[];
@@ -38,7 +38,7 @@ export function createStore() {
       mock: [],
       posts: [],
     },
-    mutations: { 
+    mutations: {
       mockData(state, data) {
         state.mock = data;
       },
@@ -46,7 +46,7 @@ export function createStore() {
         state.posts = data;
       },
     },
-    actions: { 
+    actions: {
       mockData({ commit }) {
         return new Promise((resolve, reject) => {
           setTimeout(() => {
@@ -54,10 +54,13 @@ export function createStore() {
             resolve(true);
           }, 20);
         });
-      }, 
+      },
       getAllPosts({ commit }) {
-        return articleArchives().then((res) => {
-          commit("getAllPosts", res.data); 
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            commit("getAllPosts", [{id:1,title:111},{id:2,title:222}]);
+            resolve(true);
+          }, 20);
         });
       },
     },

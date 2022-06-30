@@ -28,7 +28,7 @@ export async function render(url, manifest) {
 }
 
 function invokeAsyncData({ store, route }) {
-	 
+
 	return Promise.allSettled(
 		route.matched.map(({
 			components
@@ -60,11 +60,23 @@ function renderPreloadLinks(modules, manifest) {
 }
 
 function renderPreloadLink(file) {
-	if (file.endsWith(".js")) {
-		return `<link rel="modulepreload" crossorigin href="${file}">`;
-	} else if (file.endsWith(".css")) {
-		return `<link rel="stylesheet" href="${file}">`;
-	} else { 
-		return "";
+	if (file.endsWith('.js')) {
+		return `<link rel="modulepreload" crossorigin href="${file}">`
+	} else if (file.endsWith('.css')) {
+		return `<link rel="stylesheet" href="${file}">`
+	} else if (file.endsWith('.woff')) {
+		return ` <link rel="preload" href="${file}" as="font" type="font/woff" crossorigin>`
+	} else if (file.endsWith('.woff2')) {
+		return ` <link rel="preload" href="${file}" as="font" type="font/woff2" crossorigin>`
+	} else if (file.endsWith('.gif')) {
+		return ` <link rel="preload" href="${file}" as="image" type="image/gif" crossorigin>`
+	} else if (file.endsWith('.jpg')) {
+		return ` <link rel="preload" href="${file}" as="image" type="image/jpeg" crossorigin>`
+	} else if (file.endsWith('.jpeg')) {
+		return ` <link rel="preload" href="${file}" as="image" type="image/jpeg" crossorigin>`
+	} else if (file.endsWith('.png')) {
+		return ` <link rel="preload" href="${file}" as="image" type="image/png" crossorigin>`
+	} else {
+		return ''
 	}
 }

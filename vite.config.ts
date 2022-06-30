@@ -2,11 +2,29 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 // 如果编辑器提示 path 模块找不到，则可以安装一下 @types/node -> npm i @types/node -D
 import { resolve } from 'path'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue()
+    vue(),
+    AutoImport({
+      imports: [
+        'vue',
+        'vue-router',
+      ],
+      dts: './auto-imports.d.ts',
+      resolvers: [ElementPlusResolver({ssr:true, importStyle: true})],
+      eslintrc: {
+        enabled: false, // 配置更新时临时设为true
+      },
+    }),
+    Components({
+      dts: './components.d.ts',
+      resolvers: [ElementPlusResolver({ssr:true, importStyle: true})],
+    }),
   ],
   resolve: {
     alias: {
